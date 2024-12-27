@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.1 Chrome/128.0.6613.186 Electron/32.2.6 Safari/537.36" version="25.0.1">
   <diagram name="Page-1" id="3h0xx1Qamg4UTTMw1cyp">
-    <mxGraphModel dx="2252" dy="1422" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2337" dy="1472" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -578,8 +578,10 @@
         <mxCell id="jYLnMtY1XBDBMmt7jPl_-162" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jYLnMtY1XBDBMmt7jPl_-157" target="jYLnMtY1XBDBMmt7jPl_-159" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="jYLnMtY1XBDBMmt7jPl_-163" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jYLnMtY1XBDBMmt7jPl_-157" target="jYLnMtY1XBDBMmt7jPl_-161" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="jYLnMtY1XBDBMmt7jPl_-163" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jYLnMtY1XBDBMmt7jPl_-157" target="HlTitbdx7GmA0fprLowr-88" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-277" y="747" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="jYLnMtY1XBDBMmt7jPl_-165" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jYLnMtY1XBDBMmt7jPl_-157" target="jYLnMtY1XBDBMmt7jPl_-164" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -622,9 +624,6 @@
         </mxCell>
         <mxCell id="jYLnMtY1XBDBMmt7jPl_-159" value="duración esperada" style="ellipse;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
           <mxGeometry x="-300" y="760" width="100" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="jYLnMtY1XBDBMmt7jPl_-161" value="coste esperado" style="ellipse;whiteSpace=wrap;html=1;align=center;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="-300" y="710" width="100" height="40" as="geometry" />
         </mxCell>
         <mxCell id="jYLnMtY1XBDBMmt7jPl_-166" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" parent="1" source="jYLnMtY1XBDBMmt7jPl_-164" target="jYLnMtY1XBDBMmt7jPl_-40" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -1362,6 +1361,9 @@
         </mxCell>
         <mxCell id="HlTitbdx7GmA0fprLowr-85" value="&lt;div&gt;Consulta: fecha&lt;/div&gt;&lt;div&gt;Cita: fecha&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="-390" y="1630" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="HlTitbdx7GmA0fprLowr-88" value="coste esperado" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-300" y="710" width="100" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
