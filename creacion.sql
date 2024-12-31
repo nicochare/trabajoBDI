@@ -207,3 +207,148 @@ CREATE TABLE Consulta (
     CONSTRAINT FK_consulta_padre FOREIGN KEY (idConsultaPadre) REFERENCES Consulta (idConsulta)
 );
 
+
+CREATE TABLE Consulta_Urgencia (
+    idConsultaUrgencia VARCHAR2(6),
+    idConsulta VARCHAR2(6) UNIQUE NOT NULL,
+    descripcion VARCHAR2(150),
+    estadoActual VARCHAR2(14),
+
+    CONSTRAINT PK_consultaurgencia PRIMARY KEY (idConsultaUrgencia),
+    CONSTRAINT FK_consultaurg_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta),
+    CONSTRAINT CC_consultaurg_estadoactual CHECK (estadoActual in ('ingresado', 'en tratamiento', 'en cirugía', 'derivado', 'en observación', 'fallecido', 'dado de alta')),
+);
+
+CREATE TABLE Consulta_Rutinaria (
+    idConsultaRutinaria VARCHAR2(6),
+    idConsulta VARCHAR2(6) UNIQUE NOT NULL,
+    motivo VARCHAR2(150),
+    duracion_aproximada NUMBER(4),
+    fecha_diagnostico_aproximada DATE,
+
+    CONSTRAINT PK_consultarutinaria PRIMARY KEY (idConsultaRutinaria),
+    CONSTRAINT FK_consultarut_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta)
+);
+
+CREATE TABLE Medicamento (
+    idMedicamento VARCHAR2(6),
+    nombre VARCHAR2(50),
+    unidades_caja NUMBER(3),
+    costo NUMBER(8,2),
+
+    CONSTRAINT PK_medicamento PRIMARY KEY (idMedicamento),
+    CONSTRAINT CC_med_may_0 CHECK (unidades_caja > 0 AND costo > 0)
+);
+
+CREATE TABLE Tipo_Medicamento (
+    idTipoMedicamento VARCHAR2(6),
+    idMedicamento VARCHAR2(6) NOT NULL,
+    tipo VARCHAR2(50) NOT NULL,
+
+    CONSTRAINT PK_tipo_medicamento PRIMARY KEY (idTipoMedicamento),
+    CONSTRAINT FK_tipo_med_medicamento FOREIGN KEY (idMedicamento) REFERENCES Medicamento (idMedicamento),
+    CONSTRAINT CC_tipo_med_unico UNIQUE (idMedicamento, tipo)
+);
+
+CREATE TABLE Proveedor (
+    idProveedor VARCHAR2(6),
+    nombre VARCHAR2(50),
+    correo VARCHAR2(50),
+    telefono VARCHAR2(12),
+    telefono_urgencias VARCHAR2(12),
+    region VARCHAR2(50),
+    pais VARCHAR2(50),
+    codigo_postal NUMBER(5),
+    numero NUMBER(5),
+    tipo_via VARCHAR2(20),
+    nombre_calle VARCHAR2(50),
+
+    CONSTRAINT PK_proveedor PRIMARY KEY (idProveedor),
+    CONSTRAINT CK_proveedor_unique UNIQUE (nombre, correo)
+);
+
+CREATE TABLE Operada_Por (
+    idOperadaPor VARCHAR2(6),
+    idSalaCirugia VARCHAR2(6) NOT NULL,
+    idEmpleado VARCHAR2(6) NOT NULL,
+
+    CONSTRAINT PK_operada_por PRIMARY KEY (idOperadaPor),
+    CONSTRAINT FK_operada_por_sala FOREIGN KEY (idSalaCirugia) REFERENCES Sala_Cirugia (idSalaCirugia),
+    CONSTRAINT FK_operada_por_empleado FOREIGN KEY (idEmpleado) REFERENCES Empleado (idEmpleado),
+    CONSTRAINT CK_operada_por_unique UNIQUE (idSalaCirugia, idEmpleado),
+);
+
+CREATE TABLE Utilizada_Por (
+    idUtilizadaPor VARCHAR2(6),
+    idSalaVirtual VARCHAR2(6) NOT NULL,
+    idVeterinario VARCHAR2(6) NOT NULL,
+
+    CONSTRAINT PK_utilizada_por PRIMARY KEY (idUtilizadaPor),
+    CONSTRAINT FK_utilizada_por_sala FOREIGN KEY (idSalaVirtual) REFERENCES Sala_Virtual (idSalaVirtual),
+    CONSTRAINT FK_utilizada_por_veterinario FOREIGN KEY (idVeterinario) REFERENCES Veterinario (idVeterinario),
+    CONSTRAINT CK_utilizada_por_unique UNIQUE (idSalaVirtual, idVeterinario),
+);
+
+CREATE TABLE Monitorizacion (
+    idMonitorizacion VARCHAR2(6),
+    idSalaHospitalizacion VARCHAR2(6),
+    idVeterinario VARCHAR2(6),
+
+    CONSTRAINT PK_monitorizacion PRIMARY KEY (idMonitorizacion),
+    CONSTRAINT FK_monitorizacion_sala FOREIGN KEY (idSalaHospitalizacion) REFERENCES Sala_Hospitalizacion (idSalaHospitalizacion),
+    CONSTRAINT FK_monitorizacion_veterinario FOREIGN KEY (idVeterinario) REFERENCES Veterinario (idVeterinario),
+    CONSTRAINT CK_monitorizacion_unique UNIQUE (idSalaHospitalizacion, idVeterinario),
+);
+
+CREATE TABLE Ocupada_Por (
+    idOcupadaPor VARCHAR2(6),
+    idSalaHospitalizacion VARCHAR2(6),
+    idAnimal VARCHAR2(6),
+
+    CONSTRAINT PK_ocupada_por PRIMARY KEY (idSalaHospitalizacion),
+    CONSTRAINT FK_ocupada_por_sala FOREIGN KEY (idSalaHospitalizacion) REFERENCES Sala_Hospitalizacion (idSalaHospitalizacion),
+    CONSTRAINT FK_ocupada_por_animal FOREIGN KEY (idAnimal) REFERENCES Animal (idAnimal),
+    CONSTRAINT CK_ocupada_por_unique UNIQUE (idSalaHospitalizacion, idAnimal),
+);
+
+CREATE TABLE Asignacion (
+    idAsignacion VARCHAR2(6),
+    idSala VARCHAR2(6) NOT NULL,
+    idConsulta VARCHAR2(6) UNIQUE NOT NULL,
+    idAdministrador VARCHAR2(6) NOT NULL,
+
+    CONSTRAINT PK_asignacion PRIMARY KEY (idAsignacion),
+    CONSTRAINT FK_asignacion_sala FOREIGN KEY (idSala) REFERENCES Sala (idSala),
+    CONSTRAINT FK_asignacion_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta),
+    CONSTRAINT FK_asignacion_administrador FOREIGN KEY (idAdministrador) REFERENCES Administrador (idAdministrador)
+);
+
+CREATE TABLE Receta (
+    idReceta VARCHAR2(6),
+    idConsulta VARCHAR2(6) NOT NULL,
+    idMedicamento VARCHAR2(6) NOT NULL,
+    idAnimal VARCHAR2(6) NOT NULL,
+    dosis VARCHAR2(50),
+    unidades_a_suministrar NUMBER(3), 
+    fecha_comienzo DATE,
+    fecha_fin DATE,
+
+    CONSTRAINT PK_receta PRIMARY KEY (idReceta),
+    CONSTRAINT FK_receta_animal FOREIGN KEY (idAnimal) REFERENCES Animal (idAnimal), 
+    CONSTRAINT FK_receta_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta),
+    CONSTRAINT FK_receta_medicamento FOREIGN KEY (idMedicamento) REFERENCES Medicamento (idMedicamento),
+    CONSTRAINT CC_receta_unique UNIQUE (idConsulta, idMedicamento),
+    CONSTRAINT CC_receta_may_0 CHECK (unidades_a_suministrar > 0),
+    CONSTRAINT CC_receta_fechas CHECK (fecha_fin >= fecha_comienzo)
+);
+
+CREATE TABLE Proveido_Por (
+    idProveidoPor VARCHAR2(6),
+    idMedicamento VARCHAR2(6) NOT NULL,
+    idProveedor VARCHAR2(6) NOT NULL,
+
+    CONSTRAINT PK_proveido_por PRIMARY KEY (idProveidoPor),
+    CONSTRAINT FK_proveido_por_medicamento FOREIGN KEY (idMedicamento) REFERENCES Medicamento (idMedicamento),
+    CONSTRAINT FK_proveido_por_proveedor FOREIGN KEY (idProveedor) REFERENCES Proveedor (idProveedor),
+    CONSTRAINT CC_proveido_por_unique UNIQUE (idMedicamento, idProveedor)
+);
