@@ -15,9 +15,11 @@ CREATE TABLE Empleado (
     numero NUMBER(5),
     tipovia VARCHAR2(20),
     nombreCalle VARCHAR2(50),
+    tipo VARCHAR2(1),
 
     CONSTRAINT PK_empleado PRIMARY KEY (idEmpleado),
-    CONSTRAINT CK_empleado_turno CHECK (turno in ("dia", "noche"))
+    CONSTRAINT CK_empleado_turno CHECK (turno in ("dia", "noche")),
+    CONSTRAINT CK_empleado_tipo CHECK (tipo in ("C", "V", A))
 );
 
 -- MOVER DESPUES DE SALA
