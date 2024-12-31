@@ -130,7 +130,7 @@ CREATE TABLE Tipo_Animal (
 
     CONSTRAINT PK_tipo_animal PRIMARY KEY (idTipoAnimal),
     CONSTRAINT CC_tipo_animal_corto_unique UNIQUE (nombre_corto)
-)
+);
 
 CREATE TABLE Animal (
     idAnimal VARCHAR2(6),
