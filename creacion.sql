@@ -81,8 +81,8 @@ CREATE TABLE Veterinario (
     idSala VARCHAR2(6) UNIQUE,
 
     CONSTRAINT PK_veterinario PRIMARY KEY (idVeterinario),
-    CONSTRAINT FK_vet_empleado FOREIGN KEY (idEmpleado) REFERENCES Empleado (idEmpleado),
-    CONSTRAINT FK_vet_sala FOREIGN KEY (idSala) REFERENCES Sala (idSala)
+    CONSTRAINT FK_veterinario_empleado FOREIGN KEY (idEmpleado) REFERENCES Empleado (idEmpleado),
+    CONSTRAINT FK_veterinario_sala FOREIGN KEY (idSala) REFERENCES Sala (idSala)
 );
 
 CREATE TABLE Cirujano (
@@ -101,7 +101,7 @@ CREATE TABLE Administrador (
     idEmpleado VARCHAR2(6) UNIQUE NOT NULL,
 
     CONSTRAINT PK_administrador PRIMARY KEY (idAdministrador),
-    CONSTRAINT FK_admin_empleado FOREIGN KEY (idEmpleado) REFERENCES Empleado (idEmpleado)
+    CONSTRAINT FK_administrador_empleado FOREIGN KEY (idEmpleado) REFERENCES Empleado (idEmpleado)
 );
 
 CREATE TABLE Duenio(
@@ -146,8 +146,8 @@ CREATE TABLE Condiciones_Animal (
     gravedad NUMBER(1) NOT NULL,
 
     CONSTRAINT PK_condiciones PRIMARY KEY (idCondiciones),
-    CONSTRAINT FK_cond_animal FOREIGN KEY (idAnimal) REFERENCES Animal (idAnimal),
-    CONSTRAINT CK_cond_gravedad CHECK (gravedad BETWEEN 1 AND 10)
+    CONSTRAINT FK_condiciones_animal FOREIGN KEY (idAnimal) REFERENCES Animal (idAnimal),
+    CONSTRAINT CK_condiciones_gravedad CHECK (gravedad BETWEEN 1 AND 10)
 );
 
 CREATE TABLE Perro (
@@ -215,8 +215,8 @@ CREATE TABLE Consulta_Urgencia (
     estadoActual VARCHAR2(14),
 
     CONSTRAINT PK_consultaurgencia PRIMARY KEY (idConsultaUrgencia),
-    CONSTRAINT FK_consultaurg_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta),
-    CONSTRAINT CC_consultaurg_estadoactual CHECK (estadoActual in ('ingresado', 'en tratamiento', 'en cirugía', 'derivado', 'en observación', 'fallecido', 'dado de alta'))
+    CONSTRAINT FK_consultaurgencia_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta),
+    CONSTRAINT CC_consultaurgencia_estadoactual CHECK (estadoActual in ('ingresado', 'en tratamiento', 'en cirugía', 'derivado', 'en observación', 'fallecido', 'dado de alta'))
 );
 
 CREATE TABLE Consulta_Rutinaria (
@@ -227,7 +227,7 @@ CREATE TABLE Consulta_Rutinaria (
     fecha_diagnostico_aproximada DATE,
 
     CONSTRAINT PK_consultarutinaria PRIMARY KEY (idConsultaRutinaria),
-    CONSTRAINT FK_consultarut_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta)
+    CONSTRAINT FK_consultarutinaria_consulta FOREIGN KEY (idConsulta) REFERENCES Consulta (idConsulta)
 );
 
 CREATE TABLE Medicamento (
@@ -237,7 +237,7 @@ CREATE TABLE Medicamento (
     costo NUMBER(8,2),
 
     CONSTRAINT PK_medicamento PRIMARY KEY (idMedicamento),
-    CONSTRAINT CC_med_may_0 CHECK (unidades_caja > 0 AND costo > 0)
+    CONSTRAINT CC_medicamento_may_0 CHECK (unidades_caja > 0 AND costo > 0)
 );
 
 CREATE TABLE Tipo_Medicamento (
@@ -291,8 +291,8 @@ CREATE TABLE Utilizada_Por (
 
 CREATE TABLE Monitorizacion (
     idMonitorizacion VARCHAR2(6),
-    idSalaHospitalizacion VARCHAR2(6),
-    idVeterinario VARCHAR2(6),
+    idSalaHospitalizacion VARCHAR2(6) NOT NULL,
+    idVeterinario VARCHAR2(6) NOT NULL,
 
     CONSTRAINT PK_monitorizacion PRIMARY KEY (idMonitorizacion),
     CONSTRAINT FK_monitorizacion_sala FOREIGN KEY (idSalaHospitalizacion) REFERENCES Sala_Hospitalizacion (idSalaHospitalizacion),
@@ -302,8 +302,8 @@ CREATE TABLE Monitorizacion (
 
 CREATE TABLE Ocupada_Por (
     idOcupadaPor VARCHAR2(6),
-    idSalaHospitalizacion VARCHAR2(6),
-    idAnimal VARCHAR2(6),
+    idSalaHospitalizacion VARCHAR2(6) NOT NULL,
+    idAnimal VARCHAR2(6) NOT NULL,
 
     CONSTRAINT PK_ocupada_por PRIMARY KEY (idSalaHospitalizacion),
     CONSTRAINT FK_ocupada_por_sala FOREIGN KEY (idSalaHospitalizacion) REFERENCES Sala_Hospitalizacion (idSalaHospitalizacion),
