@@ -147,7 +147,7 @@ CREATE TABLE Animal (
     CONSTRAINT PK_animal PRIMARY KEY (idAnimal),
     CONSTRAINT FK_animal_duenio FOREIGN KEY (idDuenio) REFERENCES Duenio (idDuenio) ON DELETE CASCADE,
     CONSTRAINT FK_animal_tipo FOREIGN KEY (idTipoAnimal) REFERENCES Tipo_Animal (idTipoAnimal) ON DELETE SET NULL,
-    CONSTRAINT CK_animal_dimensiones CHECK (altura > 0 AND peso > 0 AND largo > 0 AND ancho > 0),
+    CONSTRAINT CK_animal_dimensiones CHECK (altura > 0 AND peso > 0 AND largo > 0 AND ancho > 0)
 );
 
 CREATE TABLE Condiciones_Animal (
@@ -288,7 +288,7 @@ CREATE TABLE Ocupada_Por (
     CONSTRAINT PK_ocupada_por PRIMARY KEY (idOcupadaPor),
     CONSTRAINT FK_ocupada_por_sala FOREIGN KEY (idSalaHospitalizacion) REFERENCES Sala_Hospitalizacion (idSalaHospitalizacion) ON DELETE CASCADE,
     CONSTRAINT FK_ocupada_por_animal FOREIGN KEY (idAnimal) REFERENCES Animal (idAnimal) ON DELETE CASCADE,
-    CONSTRAINT CK_ocupada_por_unique UNIQUE (idSalaHospitalizacion, idAnimal),
+    CONSTRAINT CK_ocupada_por_unique UNIQUE (idSalaHospitalizacion, idAnimal)
 );
 
 CREATE TABLE Asignacion (
