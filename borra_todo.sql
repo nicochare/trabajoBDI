@@ -1,8 +1,8 @@
-SELECT 'DROP '||OBJECT_TYPE||' '||object_name|| CASE OBJECT_TYPE WHEN 'TABLE' THEN ' CASCADE CONSTRAINTS;' ELSE ';' END "Consulta para generar Borrado" 
+SELECT 
+    'DROP ' || OBJECT_TYPE || ' ' || OBJECT_NAME || ' CASCADE CONSTRAINTS;' 
+       AS "Consulta para generar Borrado"
 FROM USER_OBJECTS
-WHERE OBJECT_TYPE NOT IN ('INDEX','TRIGGER','LOB');--para borar todos los objetos
-
+WHERE OBJECT_TYPE = 'TABLE';
 
 
 SELECT * FROM USER_OBJECTS;--Para comprobar
-
